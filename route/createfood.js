@@ -2201,9 +2201,10 @@ try{
 })
 
 router.route("/failedref").post( async (req,res)=>{
-    const {id} =req.body
+    const {Id} =req.body
 try{
-    await updatepayment.updateMany({id:id}, {done:'failed'})
+    console.log(Id)
+    await updatepayment.updateMany({id:Id}, {done:'failed'})
     return res.json({success:'success'})
 }catch(e){
     return res.json({success:'fail'})
