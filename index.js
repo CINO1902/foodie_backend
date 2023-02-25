@@ -1,4 +1,4 @@
-require('dotenv').config();   
+require('dotenv').config();  
 const express = require("express");
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -12,11 +12,11 @@ mongoose.connect(`mongodb+srv://new_db:${process.env.mongopassword}@cluster0.9ll
 ).then(() => console.log("Db Connected")).catch(()=> console.log("Database error"));
 
 app.use(express.json());
-app.use((req, res, next) => {
+app. use ((req, res, next) => {
     res.header ("Access-Control-Allow-Origin", "*");
     res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, "
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
     if (req.method === 'OPTIONS') {
         res.header ('Access-Control-Allow-Methods', 'PUT, POST, PATCH,DELETE,GET');
