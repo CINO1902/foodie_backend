@@ -2215,9 +2215,13 @@ router.route("/verifyref").post( async (req,res)=>{
     const {id} =req.body
 try{
    let getdata = await updatepayment.find({id:id})
-
-   let done = getdata[0].done
+   if(getdata.length != 0){
+    let done = getdata[0].done
     return res.json({success:'success', msg:done})
+   }else{
+    return res.json({success:'success', msg:'empty'})
+   }
+  
 }catch(e){
     return res.json({success:'fail'})
 } 
