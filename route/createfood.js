@@ -2212,9 +2212,9 @@ try{
 })
 
 router.route("/verifyref").post( async (req,res)=>{
-    const {id} =req.body
+    const {email} =req.body
 try{
-   let getdata = await updatepayment.find({id:id})
+   let getdata = await updatepayment.find({id:email})
    if(getdata.length != 0){
     let done = getdata[0].done
     return res.json({success:'success', msg:done})
