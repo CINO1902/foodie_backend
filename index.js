@@ -11,17 +11,17 @@ mongoose.connect("mongodb+srv://new_db:newdb1902@cluster0.9ll3qel.mongodb.net/Fo
 ).then(() => console.log("Db Connected")).catch(()=> console.log("Database error"));
 
 app.use(express.json());
-// app.use((req, res, next) => {
-//     res.header ("Access-Control-Allow-Origin", "*");
-//     res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//     );
-//     if (req.method === 'OPTIONS') {
-//         res.header ('Access-Control-Allow-Methods', 'PUT, POST, PATCH,DELETE,GET');
-//         return res.status(200).json({})
-//     }
-// });
+app.use((req, res, next) => {
+    res.header ("Access-Control-Allow-Origin", "*");
+    res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === 'OPTIONS') {
+        res.header ('Access-Control-Allow-Methods', 'PUT, POST, PATCH,DELETE,GET');
+        return res.status(200).json({})
+    }
+});
 app.use("/route",router);
 app.route("/").get((req,res)=>{
 res.json("hello world");
