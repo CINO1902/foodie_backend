@@ -429,11 +429,10 @@ router.route('/callnotification').post(validateToken, async (req,res, next)=>{
 router.route('/gettime').post( async (req,res)=>{
  
  
-    await updatepayment.updateOne({id:'2789d992'},{ done:'new'})
     let date = new Date ;
     console.log(date)
     function addOneDay(date) {
-        date.setDate(date.getDate() + 1);
+        date.setDate(date.getDate());
         return date;
       }
     return res.json({date:addOneDay(date)})
