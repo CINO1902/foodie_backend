@@ -1,4 +1,3 @@
-require('dotenv').config();  
 const express = require("express");
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -8,7 +7,7 @@ const cors = require('cors');
 const app = express();
 
 
-mongoose.connect(`mongodb+srv://new_db:newdb1902@cluster0.9ll3qel.mongodb.net/Foodie`
+mongoose.connect("mongodb+srv://new_db:newdb1902@cluster0.9ll3qel.mongodb.net/Foodie"
 ).then(() => console.log("Db Connected")).catch(()=> console.log("Database error"));
 
 app.use(express.json());
