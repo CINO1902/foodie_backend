@@ -21,22 +21,22 @@ const e = require("express");
 
 let dateget = []
 
-let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "caleboruta.co@gmail.com",
-      pass: "xwqzmrsorrquxhcg",
-    },
-  });
+// let transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 465,
+//     secure: true,
+//     auth: {
+//       user: "caleboruta.co@gmail.com",
+//       pass: "xwqzmrsorrquxhcg",
+//     },
+//   });
 
-  transporter.verify((error, success)=>{
-    if(error){
-        console.log(error);
-    }
-    console.log(success);
-  })
+//   transporter.verify((error, success)=>{
+//     if(error){
+//         console.log(error);
+//     }
+//     console.log(success);
+//   })
 
 router.route('/createfood').post(async (req,res)=>{
     const {item, image_url, mincost,extraable} = req.body;
