@@ -548,7 +548,7 @@ async function getcart()  {
            
         }
         const getcartemail = await orderschema.find({id:email})
-       
+        console.log(getcartemail)
         if(typeof getcartemail != "undefined"
         && getcartemail != null
         && getcartemail.length != null
@@ -580,7 +580,7 @@ async function getcart()  {
               limit : limit,
            }
        } 
-     console.log(pagnited.pagnited)
+     
      res.json({status: 'success', result: pagnited}) 
     
     return result.reverse();
