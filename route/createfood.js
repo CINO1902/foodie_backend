@@ -20,7 +20,7 @@ const moment = require("moment");
 const e = require("express");
 
 let dateget = []
-let swallow = ['Amala Pack, Semo Pack']
+let swallow = ['Amala Pack','Semo Pack']
 // let transporter = nodemailer.createTransport({
 //     host: "smtp.gmail.com",
 //     port: 465,
