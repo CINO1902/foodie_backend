@@ -20,7 +20,7 @@ const moment = require("moment");
 const e = require("express");
 
 let dateget = []
-
+let swallow = ['Amala Pack, Semo Pack']
 // let transporter = nodemailer.createTransport({
 //     host: "smtp.gmail.com",
 //     port: 465,
@@ -1616,7 +1616,7 @@ let drink4amount = finddrinkamount4[0].amount
            const odogwu = uniquerefined.some(r=> arr3.indexOf(r) >= 0)
            
            let date = new Date();
-             res.json({suggestfood: values, frequency: getid[0].frequency, expire: getid[0].expiredate, date: getid[0].date, currentdate:date, sapa:sapa, longthroat:longthroat, odogwu:odogwu, drinks: valuesdrink})
+             res.json({suggestfood: values, frequency: getid[0].frequency, expire: getid[0].expiredate, date: getid[0].date, currentdate:date, sapa:sapa, longthroat:longthroat, odogwu:odogwu, drinks: valuesdrink, swallow:swallow})
            
             return values;
         }
