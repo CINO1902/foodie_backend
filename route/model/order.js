@@ -55,6 +55,12 @@ const orderschema = new mongoose.Schema({
     location:{
         type:String
     },
+	email:{
+		type:String
+	},
+	ref:{
+		type:String
+	},
 	discounted:{
 		type:Boolean
 	},
