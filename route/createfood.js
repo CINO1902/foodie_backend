@@ -580,7 +580,7 @@ async function getcart()  {
               limit : limit,
            }
        } 
-     console.log(pagnited)
+   
      res.json({status: 'success', result: pagnited}) 
     
     return result.reverse();
