@@ -463,6 +463,9 @@ router.route('/fetchlocation').post(async (req,res, )=>{
             case 'Oluwo':
               day = 300;
                break;
+               case 'School':
+                day = 200;
+                 break;
             case 'Isolu':
                day = 300;
                 break;
