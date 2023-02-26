@@ -606,7 +606,7 @@ router.route('/fetchpackage').get( async (req, res)=>{
 
 
  router.route('/confirmorder').post(validateToken, async (req, res)=>{
-    const {package_group, amount, verified, email} = req.body;
+    const {package_group, amount, verified, email, name, number, address, location} = req.body;
   
     let Id = req.decoded.ID;
     let date = new Date();
@@ -674,7 +674,7 @@ router.route('/fetchpackage').get( async (req, res)=>{
                })
         }
        
-        await orderschema.updateMany({package_group:package_group}, {order:true, date:date, status:1, ordernum:createordernumber(), discounted:verified, discounted_amount:amount}).then((result)=>{
+        await orderschema.updateMany({package_group:package_group}, {order:true, date:date, status:1, ordernum:createordernumber(), discounted:verified, discounted_amount:amount, name:name, number:number, address:address, location:location}).then((result)=>{
            
             return  res.status(200).json({status: 'success', result: result, token:Id});
        }).catch((err)=>{

@@ -43,6 +43,18 @@ const orderschema = new mongoose.Schema({
 	ordernum:{
 		type:String
 	},
+	name:{
+        type:String
+    },
+    number:{
+        type:String
+    },
+    address:{
+        type:String
+    },
+    location:{
+        type:String
+    },
 	discounted:{
 		type:Boolean
 	},

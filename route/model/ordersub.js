@@ -31,7 +31,6 @@ const ordersub = new mongoose.Schema({
     category:{
         type:String
     },
-    
     packagename:{
         type:String
     },
