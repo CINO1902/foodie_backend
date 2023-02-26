@@ -589,15 +589,25 @@ getcart();
  })
 
  router.route('/createpackage').post(async (req, res)=>{
-    const {category, package_name, amount, extras, image}= req.body;
+    const {category, package_name, amount, extras, image, id}= req.body;
    
  
-    const insert = new package({category, package_name, amount, extras, image}); 
+    const insert = new package({category, package_name, amount, extras, image, id}); 
     try{
         await insert.save();
         return res.json({msg:'Successfully created package'})
     }catch(e){
         console.error(e)
+        return res.json({msg:'Something went wrong'})
+    }
+  })
+
+  router.route('/callsoup').get(async (req, res)=>{
+    try{
+       let soup =  await package.find({category:'soup'})
+       return res.json({soup:soup})
+    }catch(e){
+        return res.json({msg:'Something went wrong', status:'fail'})
     }
   })
 
