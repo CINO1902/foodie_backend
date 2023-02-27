@@ -21,7 +21,9 @@ const food = Schema({
         type:String,
         default:'0'
     },
-
+    segment:{
+        type:String
+    },
     image_url:{
         type:String
     },

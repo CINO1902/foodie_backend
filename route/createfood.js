@@ -39,7 +39,7 @@ let swallow = ['Amala Pack','Semo Pack']
 //   })
 
 router.route('/createfood').post(async (req,res)=>{
-    const {item, image_url, mincost,extraable} = req.body;
+    const {item, image_url, mincost,extraable, segment, maxspoon} = req.body;
     function createId(){ 
         var random = Math.floor(1000 + Math.random() * 9000)
         return random;
@@ -47,16 +47,20 @@ router.route('/createfood').post(async (req,res)=>{
 
     let id = createId();
     try{
-      let getid =  await fooddata.findOne({id: id});
+      let getid =  await fooddata.find({id: id});
+    
       if(getid.length !=0 ){
-        createId();
+       
+        return  res.json({status:"fail", msg:"Id already exist"})
       }else{
         await fooddata.create({
             id: id,
             item: item,
             image_url: image_url,
             mincost:mincost,
-            extraable:extraable
+            extraable:extraable,
+            segment:segment,
+            maxspoon:maxspoon
         }).then(()=>{
             res.json({status:"success", msg:"Item Added"})
         }).catch((err)=>{
@@ -66,7 +70,7 @@ router.route('/createfood').post(async (req,res)=>{
         })
       }
     }catch(err){
-        res.json({status:"fail", msg:"something went wrong"})
+        res.json({status:"fails", msg:"something went wrong"})
     }
     
 })
@@ -189,6 +193,7 @@ router.route('/getItems').get( async (req, res)=>{
 router.route('/getItemsExtra').post( async (req, res)=>{
     const {id} = req.body
     let getitem =  await fooddata.find({id:id});
+
     let extraarr = getitem[0].extras ;
   
     async function getextraarr()  {
