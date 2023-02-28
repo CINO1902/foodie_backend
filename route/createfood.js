@@ -1494,7 +1494,139 @@ let drink4amount = finddrinkamount4[0].amount
  
   
   }) 
+  router.route("/getpackageid").post(async (req,res)=>{
+    const {day1, day2, day3, drink1, drink2, drink3,} = req.body;
+    let extraarr1 = day1;
+    let extraarr2 = day2;
+    let extraarr3 = day3;
+    let drink11 = drink1;
+    let drink21 = drink2;
+    let drink31 = drink3;
+    let refined1 = extraarr1.map(id =>{
+        myobject =  extraarr1[0]
+      
+       let result = []
+       let count = Object.keys(myobject).length
 
+       for(let i = 0; i < count; i++){
+           result.push(id[i])
+       }
+      
+       return result;
+   })  
+   console.log(refined1)
+ 
+   let refined2 = extraarr2.map(id =>{
+       myobject =  extraarr2[0]
+      
+      let result = []
+      let count = Object.keys(myobject).length
+
+      for(let i = 0; i < count; i++){
+          result.push(id[i])
+      }
+      
+      return result;
+  })
+  
+  let refined3 = extraarr3.map(id =>{
+        myobject =  extraarr3[0]
+       
+       let result = []
+       let count = Object.keys(myobject).length
+
+       for(let i = 0; i < count; i++){
+           result.push(id[i])
+       }
+       
+       return result;
+   })
+   function refind(getdrink){
+    let getdrin = []
+    if(getdrink.length!=0){
+        getdrin = getdrink[0]
+    }else{
+        getdrin = []
+    }
+    return getdrin
+}
+   async function getextraarr()  {
+    let values1 = []
+    let values2 = []
+    let values3 = []
+   
+   
+    for(let i=0; i < refind(refined1).length; i++){
+  
+        let getextra = await package.find({id:refind(refined1)[i]});
+        function foodget(getdrink){
+            let getdrin = ''
+            if(getdrink.length!=0){
+                getdrin = getdrink[0].package_name
+            }else{
+                getdrin = ''
+            }
+            return getdrin
+     }
+
+   
+        values1.push(foodget(getextra));
+       
+     }
+     for(let i=0; i < refind(refined2).length; i++){
+  
+        let getextra = await package.find({id:refind(refined2)[i]});
+        function foodget(getdrink){
+            let getdrin = []
+         if(getdrink.length!=0){
+             getdrin = getdrink[0].package_name
+         }else{
+             getdrin = []
+         }
+         return getdrin
+     }
+        values2.push(foodget(getextra));
+
+       
+     }
+     for(let i=0; i < refind(refined3).length; i++){
+  
+        let getextra = await package.find({id:refind(refined3)[i]});
+        function foodget(getdrink){
+            let getdrin = []
+         if(getdrink.length!=0){
+             getdrin = getdrink[0].package_name
+         }else{
+             getdrin = []
+         }
+         return getdrin
+     }
+        values3.push(drinksget(getextra));
+
+       
+     }
+     function drinksget(getdrink){
+           let getdrin = ''
+        if(getdrink.length!=0){
+            getdrin = getdrink[0].package_name
+        }else{
+            getdrin = ''
+        }
+        return getdrin
+    }
+  
+        let getdrink1 = await package.find({id:drink11});
+       
+
+       
+        let getdrink2 = await package.find({id:drink21});
+        let getdrink3 = await package.find({id:drink31});
+      return res.json({food1:values1, food2: values2, food3: values3, drink1:drinksget(getdrink1), drink2:drinksget(getdrink2),  drink3:drinksget(getdrink3)})
+       
+     
+    }
+    getextraarr()
+  })
   router.route("/getmostcommon").post(async (req,res)=>{
     const {email} = req.body;
     let getid =  await subscription.find({email:email,subcribed:true});
@@ -1505,7 +1637,7 @@ let drink4amount = finddrinkamount4[0].amount
         let drink1 = getid[0].drink1;
         let drink2 = getid[0].drink2;
         let drink3 = getid[0].drink3;
-       
+       console.log(extraarr1)
         let refined1 = extraarr1.map(id =>{
              myobject =  extraarr1[0]
             
@@ -1593,7 +1725,6 @@ let drink4amount = finddrinkamount4[0].amount
         let uniquerefined = [...new Set(finalrefined)]
         let uniquedrink = [...new Set(drinks())]
     
-        console.log(uniquedrink)
          
       
         async function getextraarr()  {
