@@ -185,17 +185,10 @@ router.route('/removeextras').post(async (req,res)=>{
 
 })
 
-router.route('/getItems').get(validateToken, async (req, res)=>{
+router.route('/getItems').get( async (req, res)=>{
     let email = req.decoded.ID
    let getitem =  await fooddata.find();
-   let getsubdetails = await subscription.find({email:email, subcribed:true})
-   function getsub(){
-    let subscribe = false;
-    if(getsubdetails.length !=0){
-        subscribe = true
-    }
-    return subscribe;
-}
+
    res.status(200).json({item: getitem, subcribed:getsub()});
 })
 
@@ -501,8 +494,16 @@ router.route('/fetchidresgitered').get(validateToken, async(req,res, next)=>{
 let id = req.decoded.ID;
 
 
-await Users.findOne({email:id}).then((result)=>{
-    return res.status(200).json({success:'true', firstname:result.firstname, lastname:result.lastname, email: result.email, verified: result.verified, referal:result.referalid, address:result.address, phone:result.phone, location:result.location})
+await Users.findOne({email:id}).then(async(result)=>{
+    let getsubdetails = await subscription.find({email:id, subcribed:true})
+function getsub(){
+ let subscribe = false;
+ if(getsubdetails.length !=0){
+     subscribe = true
+ }
+ return subscribe;
+}
+    return res.status(200).json({success:'true', firstname:result.firstname, lastname:result.lastname, email: result.email, verified: result.verified, referal:result.referalid, address:result.address, phone:result.phone, location:result.location, subscribed:getsub()})
 })
 })
 
