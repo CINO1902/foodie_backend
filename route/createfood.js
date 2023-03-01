@@ -187,7 +187,15 @@ router.route('/removeextras').post(async (req,res)=>{
 
 router.route('/getItems').get( async (req, res)=>{
    let getitem =  await fooddata.find();
-   res.status(200).json({item: getitem});
+   let getsubdetails = await subscription.find({email:email, subcribed:true})
+   function getsub(){
+    let subscribe = false;
+    if(getsubdetails.length !=0){
+        subscribe = true
+    }
+    return subscribe;
+}
+   res.status(200).json({item: getitem, subcribed:getsub()});
 })
 
 router.route('/getItemsExtra').post( async (req, res)=>{
@@ -2047,13 +2055,7 @@ let drink4amount = finddrinkamount4[0].amount
 }
 
       
-function getsub(){
-    let subscribe = false;
-    if(getsubdetails.length !=0){
-        subscribe = true
-    }
-    return subscribe;
-}
+
     
     if(getsubdetails.length != 0){
         let date = new Date();
@@ -2064,7 +2066,7 @@ function getsub(){
       let days = Math.ceil(diff/ms)
 
 
-        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: days, subscribed:getsub()})
+        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: days})
     }
   })
 
