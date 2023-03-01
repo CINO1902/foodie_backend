@@ -1171,7 +1171,11 @@ let drink4amount = finddrinkamount4[0].amount
   let frequency3 = subfrequency3food + subfrequency3drink
 
   let priceseach = []
+  let drinkforeach = []
+  let foodforeach = []
   priceseach.push(frequency1, frequency2, frequency3)
+  drinkforeach.push(subfrequency1drink, subfrequency2drink,subfrequency3drink)
+  foodforeach.push(subfrequency1food, subfrequency2food, subfrequency3food)
   console.log(priceseach);
         function percentage(getpercent, totalValue) {
             return (getpercent / 100) * totalValue;
@@ -1179,7 +1183,7 @@ let drink4amount = finddrinkamount4[0].amount
          let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
          let subamount = finalamount - percentage(30, finalamount)
          dateget.push(subamount, finalamount, subscidizeddrink, subamount + subscidizeddrink)
-         return res.json({amount:(subamount + subscidizeddrink)})
+         return res.json({amount:(subamount + subscidizeddrink), drinks:drinkforeach, food: foodforeach, total: priceseach})
 })
 
 router.route('/sendsubscription').post(async (req,res)=>{
