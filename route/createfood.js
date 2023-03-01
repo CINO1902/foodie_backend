@@ -186,7 +186,7 @@ router.route('/removeextras').post(async (req,res)=>{
 })
 
 router.route('/getItems').get( async (req, res)=>{
-    let email = req.decoded.ID
+    
    let getitem =  await fooddata.find();
 
    res.status(200).json({item: getitem, subcribed:getsub()});
