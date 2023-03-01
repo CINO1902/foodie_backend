@@ -492,10 +492,7 @@ router.route('/fetchlocation').post(async (req,res, )=>{
 router.route('/fetchidresgitered').get(validateToken, async(req,res, next)=>{
 
 let id = req.decoded.ID;
-
-
-await Users.findOne({email:id}).then(async(result)=>{
-    let getsubdetails = await subscription.find({email:id, subcribed:true})
+let getsubdetails = await subscription.find({email:id, subcribed:true})
 function getsub(){
  let subscribe = false;
  if(getsubdetails.length !=0){
@@ -503,6 +500,9 @@ function getsub(){
  }
  return subscribe;
 }
+
+await Users.findOne({email:id}).then(async(result)=>{
+   
     return res.status(200).json({success:'true', firstname:result.firstname, lastname:result.lastname, email: result.email, verified: result.verified, referal:result.referalid, address:result.address, phone:result.phone, location:result.location, subscribed:getsub()})
 })
 })
