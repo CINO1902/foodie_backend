@@ -189,7 +189,7 @@ router.route('/getItems').get( async (req, res)=>{
     
    let getitem =  await fooddata.find();
 
-   res.status(200).json({item: getitem, subcribed:getsub()});
+   res.status(200).json({item: getitem});
 })
 
 router.route('/getItemsExtra').post( async (req, res)=>{
