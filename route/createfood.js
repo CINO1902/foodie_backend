@@ -2045,6 +2045,15 @@ let drink4amount = finddrinkamount4[0].amount
     function substract(date1, date2) {
     return moment.substract(date1, date2).days();
 }
+
+      
+function getsub(){
+    let subscribe = false;
+    if(getsubdetails.length !=0){
+        subscribe = true
+    }
+    return subscribe;
+}
     
     if(getsubdetails.length != 0){
         let date = new Date();
@@ -2055,7 +2064,7 @@ let drink4amount = finddrinkamount4[0].amount
       let days = Math.ceil(diff/ms)
 
 
-        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: days})
+        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: days, subscribed:getsub()})
     }
   })
 
