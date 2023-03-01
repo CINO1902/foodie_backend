@@ -1160,7 +1160,13 @@ let drink4amount = finddrinkamount4[0].amount
       let drinkfinal = getdrinkamount(drinks1) + getdrinkamount(drinks2) + getdrinkamount(drinks3)
   
    let finalamount = getamount(category1) + getamount(category2) + getamount(category3);
-  
+  let frequency1 = (getamount(category1) + getdrinkamount(drinks1)) - percentage(30, (getamount(category1) + getdrinkamount(drinks1)))
+  let frequency2 = (getamount(category2) + getdrinkamount(drinks2)) - percentage(30, (getamount(category2) + getdrinkamount(drinks2)))
+  let frequency3 = (getamount(category3) + getdrinkamount(drinks3)) - percentage(30, (getamount(category3) + getdrinkamount(drinks3)))
+
+  let priceseach = []
+  priceseach.push(frequency1, frequency2, frequency3)
+  console.log(priceseach);
         function percentage(getpercent, totalValue) {
             return (getpercent / 100) * totalValue;
          } 
