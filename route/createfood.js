@@ -1160,9 +1160,15 @@ let drink4amount = finddrinkamount4[0].amount
       let drinkfinal = getdrinkamount(drinks1) + getdrinkamount(drinks2) + getdrinkamount(drinks3)
   
    let finalamount = getamount(category1) + getamount(category2) + getamount(category3);
-  let frequency1 = (getamount(category1) + getdrinkamount(drinks1)) - percentage(30, (getamount(category1) + getdrinkamount(drinks1)))
-  let frequency2 = (getamount(category2) + getdrinkamount(drinks2)) - percentage(30, (getamount(category2) + getdrinkamount(drinks2)))
-  let frequency3 = (getamount(category3) + getdrinkamount(drinks3)) - percentage(30, (getamount(category3) + getdrinkamount(drinks3)))
+  let subfrequency1food = getamount(category1) - percentage(30, getamount(category1))
+  let subfrequency1drink = getdrinkamount(drinks1) - percentage(20, getdrinkamount(drinks1))
+  let frequency1 =  subfrequency1food + subfrequency1drink
+  let subfrequency2food = getamount(category2) - percentage(30, getamount(category2))
+  let subfrequency2drink = getdrinkamount(drinks2) - percentage(20, getdrinkamount(drinks2))
+  let frequency2 = subfrequency2food + subfrequency2drink
+  let subfrequency3food = getamount(category3) - percentage(30, getamount(category3))
+  let subfrequency3drink = getdrinkamount(drinks3) - percentage(20, getdrinkamount(drinks3))
+  let frequency3 = subfrequency3food + subfrequency3drink
 
   let priceseach = []
   priceseach.push(frequency1, frequency2, frequency3)
@@ -1198,10 +1204,7 @@ router.route('/sendsubscription').post(async (req,res)=>{
         let subscidizeddrink = dateget[2];
         let finalamount =dateget[1];
         let subamount = dateget[0];
-        console.log(totalamount)
-        console.log(subscidizeddrink)
-        console.log(finalamount)
-        console.log(subamount)
+      
          sumdetails(subamount, finalamount, subscidizeddrink, totalamount)
     
  
