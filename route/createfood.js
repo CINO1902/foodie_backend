@@ -185,7 +185,8 @@ router.route('/removeextras').post(async (req,res)=>{
 
 })
 
-router.route('/getItems').get( async (req, res)=>{
+router.route('/getItems').get(validateToken, async (req, res)=>{
+    let email = req.decoded.ID
    let getitem =  await fooddata.find();
    let getsubdetails = await subscription.find({email:email, subcribed:true})
    function getsub(){
