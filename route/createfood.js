@@ -1212,7 +1212,10 @@ router.route('/sendsubscription').post(async (req,res)=>{
       
          sumdetails(subamount, finalamount, subscidizeddrink, totalamount)
     
- 
+ console.log(subamount)
+ console.log(finalamount)
+ console.log(subscidizeddrink)
+ console.log(totalamount)
  async function  sumdetails(discounted, finalamount, drinkamount, totalamount){
     let subid = createId();
     let findpackageid = await subscription.find({subid:subid});
@@ -1237,8 +1240,7 @@ router.route('/sendsubscription').post(async (req,res)=>{
          })
          await notification.create({
             id: email,
-            notification_type:6,
-            
+            notification_type:6,      
             date:createdate
          })
        res.json({status: 'success', msg: 'Subscription created sucessfully'}); 
