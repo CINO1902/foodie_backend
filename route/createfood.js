@@ -17,6 +17,7 @@ const coupon = require("./model/coupon");
 const notification = require("./model/notification");
 const updatepayment = require("./model/updatepayment");
 const storecalcuate = require("./model/storecalculate");
+const upgradestorage = require("./model/upgradestorage");
 const moment = require("moment");
 const e = require("express");
 
@@ -1298,21 +1299,27 @@ router.route('/sendsubscription').post(async (req,res)=>{
   console.log(days)
   let subcribed = false;
   let newplan= true;
-  let totalamount = dateget[3];
-  let drinkamount = dateget[2];
-  let finalamount =dateget[1];
-  let discounted = dateget[0];
+  let finddata = await storecalcuate.find({email:email})
+  if(finddata.length != 0){
+
+ let discounted = finddata[0].discounted
+ let finalamount = finddata[0].finalamount
+ let drinkamount = finddata[0].drinkamount
+ let totalamount = finddata[0].totalamount
+ 
  const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, category1, category2, category3,totalamount, drinkamount, finalamount, discounted,  subid, subcribed, newplan, date, expiredate}); 
   try{
    await insert.save();
-  res.json({status: 'success', msg: 'Added To List'}); 
+ return  res.json({status: 'success', msg: 'Added To List'}); 
   }
    catch(err){
  console.log(err);
- res.json({status: 'fail', msg: 'Something went wrong'}); 
+ return res.json({status: 'fail', msg: 'Something went wrong'}); 
  }     
      
-     
+}else{
+    return res.json({status: 'fail', msg: 'Something went wrong'}); 
+}
   })
 
 
@@ -1405,8 +1412,30 @@ let drink4amount = finddrinkamount4[0].amount
         let pricetopay = dailypricenew * d
      let unused_money = dailyprice * d;
      
-    
-    
+    //outstandingfood
+    //outstandingdrink
+    //ounstandingtotal
+    //newbalancemeal
+    //new balance drink
+
+   
+    let subfrequency1food = getamount(category1) - percentage(30, getamount(category1))
+    let subfrequency1drink = getdrinkamount(drinks1) - percentage(20, getdrinkamount(drinks1))
+    let frequency1 =  subfrequency1food + subfrequency1drink
+    let subfrequency2food = getamount(category2) - percentage(30, getamount(category2))
+    let subfrequency2drink = getdrinkamount(drinks2) - percentage(20, getdrinkamount(drinks2))
+    let frequency2 = subfrequency2food + subfrequency2drink
+    let subfrequency3food = getamount(category3) - percentage(30, getamount(category3))
+    let subfrequency3drink = getdrinkamount(drinks3) - percentage(20, getdrinkamount(drinks3))
+    let frequency3 = subfrequency3food + subfrequency3drink
+  
+    let priceseach = []
+    let drinkforeach = []
+    let foodforeach = []
+    priceseach.push(frequency1, frequency2, frequency3)
+    drinkforeach.push(subfrequency1drink, subfrequency2drink,subfrequency3drink)
+    foodforeach.push(subfrequency1food, subfrequency2food, subfrequency3food)
+    let outstandingfood = unused_money -percentage(30, unused_money)
       let discount = (totalamount - percentage(30, totalamount)).toFixed(2)
      let new_amount_to_pay = pricetopay - unused_money
      let amount_to_pay = (new_amount_to_pay - percentage(30, new_amount_to_pay)).toFixed(2)
@@ -1428,18 +1457,49 @@ let drink4amount = finddrinkamount4[0].amount
                 if((amount_to_pay + final_drink) < 1000){
                     return res.json({status:'fail', msg:'You cannot upgrade to a plan with a value than 1000'})
                 }else{
-                    dateget.push(parseFloat(discount), totalamount, subscidizeddrink, parseInt(discount) + subscidizeddrink, newplan, rollover, datereg, expiredate, subid, drinkamountfood, existingdrink1, existingdrink2, existingdrink3, drinkget())
-                    console.log(dateget)
-                    return res.json({status:'success', amount:drinkamountfood.toString()})
+                  //  dateget.push(parseFloat(discount), totalamount, subscidizeddrink, parseInt(discount) + subscidizeddrink, newplan, rollover, datereg, expiredate, subid, drinkamountfood, existingdrink1, existingdrink2, existingdrink3, drinkget())
+                  await upgradestorage.deleteMany({email:email})
+                  await upgradestorage.create({
+                    email:email,
+                    finalamount:totalamount,
+                    discounted:parseFloat(discount),
+                    drinkamount: subscidizeddrink,
+                    totalamount:parseInt(discount) + subscidizeddrink,
+                    newplan:newplan,
+                    rollover:rollover,
+                    date:datereg,
+                    expireday:expiredate,
+                    subid:subid,
+                    drinkamountfood:drinkamountfood,
+                    existingdrink1:existingdrink1,
+                    existingdrink2:existingdrink2,
+                    existingdrink3:existingdrink3,
+                    drinkget:drinkget()
+                   })
+                    return res.json({status:'success', amount:drinkamountfood.toString(), outstandingdrink:unused_drink, outstandingfood:outstandingfood, outstandingtotal: unused_drink+ outstandingfood, priceseach:priceseach, drinkforeach:drinkforeach, foodforeach:foodforeach})
                 }
             }
          } else{
             if(parseInt(amount_to_pay)  < 1000){
                 return res.json({status:'fail', msg:'You cannot upgrade to a plan with a value than 1000'})
             }else{
-                   dateget.push(parseFloat(discount), totalamount, subscidizeddrink, parseInt(discount) + subscidizeddrink, newplan, rollover, datereg, expiredate, subid, amount_to_pay, )
-                console.log(dateget)
-                return res.json({status:'success', amount:amount_to_pay})
+
+                //    dateget.push(parseFloat(discount), totalamount, subscidizeddrink, parseInt(discount) + subscidizeddrink, newplan, rollover, datereg, expiredate, subid, amount_to_pay, )
+                await upgradestorage.deleteMany({email:email})
+                  await upgradestorage.create({
+                    email:email,
+                    finalamount:totalamount,
+                    discounted:parseFloat(discount),
+                    drinkamount: subscidizeddrink,
+                    totalamount:parseInt(discount) + subscidizeddrink,
+                    newplan:newplan,
+                    rollover:rollover,
+                    date:datereg,
+                    expireday:expiredate,
+                    subid:subid,
+                    drinkamountfood:amount_to_pay,
+                   })
+                return res.json({status:'success', amount:amount_to_pay, priceseach:priceseach, drinkforeach:drinkforeach, foodforeach:foodforeach, outstandingdrink:unused_drink, outstandingfood:outstandingfood, outstandingtotal: unused_drink+ outstandingfood})
             }
             
          }
@@ -1460,25 +1520,27 @@ let drink4amount = finddrinkamount4[0].amount
   router.route('/upgradesub').post(async (req,res)=>{
     const {email, frequency, day1, day2, day3, drink1, drink2, drink3, category1, category2, category3} = req.body; // <-- missed `games`
    
-    let totalamount = dateget[3]
-    let drinkamount = dateget[2]
-    let finalamount = dateget[1]
-    let discounted = dateget[0]
-    let subcribed = true
-    let newplan = dateget[4]
-    let rollover =  dateget[5]
-    let date = dateget[6]
-    let expiredate = dateget[7]
-    let subid = dateget[8]
-    let payamount = dateget[9]
+    
     let currentdate = new Date();
    
  
  
     try{
         
-    
-   
+    let finddata = await upgradestorage.find({email:email})
+    if(finddata.length!= 0){
+
+        let totalamount = finddata[0].totalamount
+        let drinkamount = finddata[0].drinkamount
+        let finalamount = finddata[0].finalamount
+        let discounted =finddata[0].discounted
+        let subcribed = true
+        let newplan = finddata[0].newplan
+        let rollover =  finddata[0].rollover
+        let date = finddata[0].date
+        let expiredate = finddata[0].expiredate
+        let subid = finddata[0].subid
+        let payamount = finddata[0].drinkamountfood
      if(drink1 != ''|| drink2 != '' || drink3 != ''){
         await subscription.deleteMany({email:email, subcribed:true, subid:subid})
         const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, category1, category2, category3, totalamount, drinkamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
@@ -1497,10 +1559,10 @@ let drink4amount = finddrinkamount4[0].amount
          })
          return res.json({status: 'success', msg: 'Upgraded Sucessfully'}); 
     }else{
-        let drink1 = dateget[10]
-        let drink2 = dateget[11]
-        let drink3 = dateget[12]
-        let drinkamount = dateget[13]
+        let drink1 = finddata[0].existingdrink1
+        let drink2 = finddata[0].existingdrink2
+        let drink3 = finddata[0].existingdrink3
+        let drinkamount = finddata[0].drinkget
         await subscription.deleteMany({email:email, subcribed:true, subid:subid})
         const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, drinkamount, category1, category2, category3, totalamount, drinkamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
         await insert.save();
@@ -1519,14 +1581,16 @@ let drink4amount = finddrinkamount4[0].amount
          return res.json({status: 'success', msg: 'Upgraded Sucessfully'}); 
     }
    
-     
+}else{
+    return res.json({status: 'fail', msg: 'Something went wrong'}); 
+}
     }
      catch(err){
    console.log(err);
-  
+   return res.json({status: 'fail', msg: 'Something went wrong'}); 
    }     
- 
- 
+
+
   
   }) 
   router.route("/getpackageid").post(async (req,res)=>{
