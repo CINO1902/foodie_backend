@@ -1183,6 +1183,7 @@ let drink4amount = finddrinkamount4[0].amount
          let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
          let subamount = finalamount - percentage(30, finalamount)
          dateget.push(subamount, finalamount, subscidizeddrink, subamount + subscidizeddrink)
+         console.log(dateget)
          return res.json({amount:(subamount + subscidizeddrink), drinks:drinkforeach, food: foodforeach, total: priceseach})
 })
 
