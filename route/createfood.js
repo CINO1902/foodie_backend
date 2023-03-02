@@ -16,6 +16,7 @@ const ordersub = require("./model/ordersub");
 const coupon = require("./model/coupon");
 const notification = require("./model/notification");
 const updatepayment = require("./model/updatepayment");
+const storecalcuate = require("./model/storecalculate");
 const moment = require("moment");
 const e = require("express");
 
@@ -1182,8 +1183,16 @@ let drink4amount = finddrinkamount4[0].amount
          } 
          let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
          let subamount = finalamount - percentage(30, finalamount)
-         dateget.push(subamount, finalamount, subscidizeddrink, subamount + subscidizeddrink)
-         console.log(dateget)
+      
+         await storecalcuate.create({
+            email:email,
+            totalamount:subamount + subscidizeddrink,
+            drinkamount:  subscidizeddrink,
+            discounted:subamount,
+            finalamount:finalamount
+         })
+         
+
          return res.json({amount:(subamount + subscidizeddrink), drinks:drinkforeach, food: foodforeach, total: priceseach})
 })
 
@@ -1205,17 +1214,15 @@ router.route('/sendsubscription').post(async (req,res)=>{
                     return random+makeid(8);
   }
  
-        let totalamount = dateget[3];
-        let subscidizeddrink = dateget[2];
-        let finalamount =dateget[1];
-        let subamount = dateget[0];
-      
-         sumdetails(subamount, finalamount, subscidizeddrink, totalamount)
+     let finddata = await storecalcuate.find({email:email})
+     if(finddata.length != 0){
+
+    let discounted = finddata[0].discounted
+    let finalamount = finddata[0].finalamount
+    let drinkamount = finddata[0].drinkamount
+    let totalamount = finddata[0].totalamount
+    sumdetails(discounted, finalamount, drinkamount,totalamount )
     
- console.log(subamount)
- console.log(finalamount)
- console.log(subscidizeddrink)
- console.log(totalamount)
  async function  sumdetails(discounted, finalamount, drinkamount, totalamount){
     let subid = createId();
     let findpackageid = await subscription.find({subid:subid});
@@ -1253,7 +1260,9 @@ router.route('/sendsubscription').post(async (req,res)=>{
  }
    
  
-     
+}else{
+    return res.json({status:'fail', msg:'Something went wrong'})
+ }
      
   })
 
