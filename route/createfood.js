@@ -1183,7 +1183,7 @@ let drink4amount = finddrinkamount4[0].amount
          } 
          let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
          let subamount = finalamount - percentage(30, finalamount)
-      
+      await storecalcuate.deleteMany({email:email})
          await storecalcuate.create({
             email:email,
             totalamount:subamount + subscidizeddrink,
@@ -1222,7 +1222,7 @@ router.route('/sendsubscription').post(async (req,res)=>{
     let drinkamount = finddata[0].drinkamount
     let totalamount = finddata[0].totalamount
     sumdetails(discounted, finalamount, drinkamount,totalamount )
-    
+
  async function  sumdetails(discounted, finalamount, drinkamount, totalamount){
     let subid = createId();
     let findpackageid = await subscription.find({subid:subid});
