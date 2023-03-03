@@ -1356,21 +1356,21 @@ router.route('/sendsubscription').post(async (req,res)=>{
               let subid = getsubdetails[0].subid
        let rollover = getsubdetails[0].rollover
       let currentdate = new Date();
-      var dif= Math.abs(expiredate-currentdate);
-      let d = Math.round(dif/(1000 * 3600 * 24)) + 1;
-    
+      var dif= expiredate.getDate()-currentdate.getDate();
+      let d =  dif;
+    console.log(d);
 
       let dailyprice = price/30
       
      let subcribed = true;
-     function getamount(category){
+     function getamount(category, d){
        let  amount = 0
          if(category == 'sapa'){
-             amount = 800 * 30
+             amount = 800 * d
          }else if(category == 'longthroat'){
-             amount = 1300 * 30
+             amount = 1300 * d
          }else if(category == 'odogwu'){
-             amount = 1800 * 30
+             amount = 1800 * d
          }
          return amount
      }
@@ -1383,23 +1383,23 @@ let drink2amount = finddrinkamount2[0].amount
 let drink3amount = finddrinkamount3[0].amount
 let drink4amount = finddrinkamount4[0].amount
 
-    function getdrinkamount(category){
+    function getdrinkamount(category, d){
         let  amount = 0
           if(category == '1007'){
-              amount = drink1amount * 30
+              amount = drink1amount * d
           }else if(category == '1008'){
-              amount = drink2amount * 30
+              amount = drink2amount * d
           }else if(category == '1009'){
-              amount = drink3amount * 30
+              amount = drink3amount * d
           }else if(category == '1010'){
-            amount = drink4amount * 30
+            amount = drink4amount * d
         }
           return amount
       }
       function percentage(getpercent, pricetopay) {
         return (getpercent / 100) * pricetopay;
      } 
-      let drinkfinal = getdrinkamount(drinks1) + getdrinkamount(drinks2) + getdrinkamount(drinks3)
+      let drinkfinal = getdrinkamount(drinks1,30) + getdrinkamount(drinks2, 30) + getdrinkamount(drinks3, 30)
       let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
       let drinkprice = drinkget() / 30
       let dailydrinkprice = subscidizeddrink / 30
@@ -1407,26 +1407,20 @@ let drink4amount = finddrinkamount4[0].amount
       let drink_to_pay = dailydrinkprice * d
       let final_drink = (drink_to_pay - unused_drink).toFixed(2)
     
-        let totalamount = getamount(category1) + getamount(category2) + getamount(category3);
+        let totalamount = getamount(category1,30) + getamount(category2,30) + getamount(category3,30);
         let dailypricenew = totalamount/30
         let pricetopay = dailypricenew * d
      let unused_money = dailyprice * d;
      
-    //outstandingfood
-    //outstandingdrink
-    //ounstandingtotal
-    //newbalancemeal
-    //new balance drink
 
-   
-    let subfrequency1food = getamount(category1) - percentage(30, getamount(category1))
-    let subfrequency1drink = getdrinkamount(drinks1) - percentage(20, getdrinkamount(drinks1))
+    let subfrequency1food = getamount(category1,d) - percentage(30, getamount(category1,d))
+    let subfrequency1drink = getdrinkamount(drinks1,d) - percentage(20, getdrinkamount(drinks1,d))
     let frequency1 =  subfrequency1food + subfrequency1drink
-    let subfrequency2food = getamount(category2) - percentage(30, getamount(category2))
-    let subfrequency2drink = getdrinkamount(drinks2) - percentage(20, getdrinkamount(drinks2))
+    let subfrequency2food = getamount(category2,d) - percentage(30, getamount(category2,d))
+    let subfrequency2drink = getdrinkamount(drinks2,d) - percentage(20, getdrinkamount(drinks2,d))
     let frequency2 = subfrequency2food + subfrequency2drink
-    let subfrequency3food = getamount(category3) - percentage(30, getamount(category3))
-    let subfrequency3drink = getdrinkamount(drinks3) - percentage(20, getdrinkamount(drinks3))
+    let subfrequency3food = getamount(category3,d) - percentage(30, getamount(category3,d))
+    let subfrequency3drink = getdrinkamount(drinks3,d) - percentage(20, getdrinkamount(drinks3,d))
     let frequency3 = subfrequency3food + subfrequency3drink
   
     let priceseach = []
@@ -2142,19 +2136,9 @@ let drink4amount = finddrinkamount4[0].amount
       newl = newplan[0].newplan
     }
     return newl
-   }
-    function substract(date1, date2) {
-    return moment.substract(date1, date2).days();
-}
-
-      
-
-    
+   } 
     if(getsubdetails.length != 0){
         let date = new Date();
-        let datenumber =  Math.abs(date.getDate() - getsubdetails[0].date.getDate()); 
-
-       //let diff = date.getTime() - getsubdetails[0].date.getTime()
        let diff = date.getDate() - getsubdetails[0].date.getDate()
 
 
