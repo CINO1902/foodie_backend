@@ -1401,9 +1401,9 @@ let drink4amount = finddrinkamount4[0].amount
      } 
       let drinkfinal = getdrinkamount(drinks1,30) + getdrinkamount(drinks2, 30) + getdrinkamount(drinks3, 30)
       console.log(drinkfinal)
-      getdrinkamount(drinks1,30)
-      getdrinkamount(drinks2,30)
-      getdrinkamount(drinks3,30)
+      console.log(getdrinkamount(drinks1,30))
+      console.log(getdrinkamount(drinks2,30))
+      console.log(getdrinkamount(drinks3,30))
       let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
       let drinkprice = drinkget() / 30
       let dailydrinkprice = subscidizeddrink / 30
