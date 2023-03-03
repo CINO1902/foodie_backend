@@ -1197,6 +1197,81 @@ let drink4amount = finddrinkamount4[0].amount
          return res.json({amount:(subamount + subscidizeddrink), drinks:drinkforeach, food: foodforeach, total: priceseach})
 })
 
+router.route('/rollovercalculateamount').post(async (req,res)=>{
+    dateget.length = 0
+    const {email, category1, category2, category3, drinks1, drinks2, drinks3} = req.body; 
+    function getamount(category){
+      let  amount = 0
+        if(category == 'sapa'){
+            amount = 800 * 30
+        }else if(category == 'longthroat'){
+            amount = 1300 * 30
+        }else if(category == 'odogwu'){
+            amount = 1800 * 30
+        }
+        return amount
+    }
+let finddrinkamount1 = await package.find({id:'1007'})
+let finddrinkamount2 = await package.find({id:'1008'})
+let finddrinkamount3 = await package.find({id:'1009'})
+let finddrinkamount4 = await package.find({id:'1010'})
+let drink1amount = finddrinkamount1[0].amount
+let drink2amount = finddrinkamount2[0].amount
+let drink3amount = finddrinkamount3[0].amount
+let drink4amount = finddrinkamount4[0].amount
+
+    function getdrinkamount(category){
+        let  amount = 0
+          if(category == '1007'){
+              amount = drink1amount * 30
+          }else if(category == '1008'){
+              amount = drink2amount * 30
+          }else if(category == '1009'){
+              amount = drink3amount * 30
+          }else if(category == '1010'){
+            amount = drink4amount * 30
+        }
+          return amount
+      }
+
+      let drinkfinal = getdrinkamount(drinks1) + getdrinkamount(drinks2) + getdrinkamount(drinks3)
+  
+   let finalamount = getamount(category1) + getamount(category2) + getamount(category3);
+  let subfrequency1food = getamount(category1) - percentage(30, getamount(category1))
+  let subfrequency1drink = getdrinkamount(drinks1) - percentage(20, getdrinkamount(drinks1))
+  let frequency1 =  subfrequency1food + subfrequency1drink
+  let subfrequency2food = getamount(category2) - percentage(30, getamount(category2))
+  let subfrequency2drink = getdrinkamount(drinks2) - percentage(20, getdrinkamount(drinks2))
+  let frequency2 = subfrequency2food + subfrequency2drink
+  let subfrequency3food = getamount(category3) - percentage(30, getamount(category3))
+  let subfrequency3drink = getdrinkamount(drinks3) - percentage(20, getdrinkamount(drinks3))
+  let frequency3 = subfrequency3food + subfrequency3drink
+
+  let priceseach = []
+  let drinkforeach = []
+  let foodforeach = []
+  priceseach.push(frequency1, frequency2, frequency3)
+  drinkforeach.push(subfrequency1drink, subfrequency2drink,subfrequency3drink)
+  foodforeach.push(subfrequency1food, subfrequency2food, subfrequency3food)
+  console.log(priceseach);
+        function percentage(getpercent, totalValue) {
+            return (getpercent / 100) * totalValue;
+         } 
+         let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
+         let subamount = finalamount - percentage(30, finalamount)
+      await storecalcuate.deleteMany({email:email})
+         await storecalcuate.create({
+            email:email,
+            totalamount:subamount + subscidizeddrink,
+            drinkamount:  subscidizeddrink,
+            discounted:subamount,
+            finalamount:finalamount
+         })
+         
+
+         return res.json({amount:(subamount + subscidizeddrink) - percentage(10, (subamount + subscidizeddrink)), rollover:(subamount + subscidizeddrink), drinks:drinkforeach, food: foodforeach, total: priceseach})
+})
+
 router.route('/sendsubscription').post(async (req,res)=>{
     const {email, frequency, day1, day2, day3, drink1, drink2, drink3, category1, category2, category3} = req.body; // <-- missed `games`
 
@@ -1956,9 +2031,7 @@ let drink4amount = finddrinkamount4[0].amount
     let coountdrink = count.filter(item=>{
         return item.category == '4'
     })
-   console.log(coountfood.length)
-      console.log(frequency)
-     
+
      if(category == '4'){
         if(coountdrink.length  < countdri()  ){
             await ordersub.create({
