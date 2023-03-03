@@ -2153,13 +2153,13 @@ let drink4amount = finddrinkamount4[0].amount
     if(getsubdetails.length != 0){
         let date = new Date();
         let datenumber =  Math.abs(date.getDate() - getsubdetails[0].date.getDate()); 
-       //let days = Math.floor(datenumber / (24*60*60*1000) +1);
-       let ms = 1000 * 3600 * 24
-       let diff = date.getTime() - getsubdetails[0].date.getTime()
-      let days = Math.ceil(diff/ms)
+
+       //let diff = date.getTime() - getsubdetails[0].date.getTime()
+       let diff = date.getDate() - getsubdetails[0].date.getDate()
 
 
-        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: days})
+
+        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: diff +1})
     }
   })
 
