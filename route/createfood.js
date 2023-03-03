@@ -1382,7 +1382,7 @@ let drink1amount = finddrinkamount1[0].amount
 let drink2amount = finddrinkamount2[0].amount
 let drink3amount = finddrinkamount3[0].amount
 let drink4amount = finddrinkamount4[0].amount
-co
+
     function getdrinkamount(category, d){
         let  amount = 0
           if(category == '1007'){
