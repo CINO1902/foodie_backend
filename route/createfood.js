@@ -1358,7 +1358,7 @@ router.route('/sendsubscription').post(async (req,res)=>{
       let currentdate = new Date();
       var dif= expiredate.getDate()-currentdate.getDate();
       let d =  dif +1;
-    console.log(d);
+   
 
       let dailyprice = price/30
       
@@ -1382,7 +1382,7 @@ let drink1amount = finddrinkamount1[0].amount
 let drink2amount = finddrinkamount2[0].amount
 let drink3amount = finddrinkamount3[0].amount
 let drink4amount = finddrinkamount4[0].amount
-
+co
     function getdrinkamount(category, d){
         let  amount = 0
           if(category == '1007'){
@@ -1412,7 +1412,7 @@ let drink4amount = finddrinkamount4[0].amount
         let pricetopay = dailypricenew * d
      let unused_money = dailyprice * d;
      
-
+     console.log(getdrinkamount(drinks3,d))
     let subfrequency1food = getamount(category1,d) - percentage(30, getamount(category1,d))
     let subfrequency1drink = getdrinkamount(drinks1,d) - percentage(20, getdrinkamount(drinks1,d))
     let frequency1 =  subfrequency1food + subfrequency1drink
