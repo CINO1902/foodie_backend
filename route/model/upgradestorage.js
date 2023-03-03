@@ -39,7 +39,7 @@ const upgradestorage = new mongoose.Schema({
 		default:1
 	},
 	expireday:{
-		type:Number,
+		type:Date,
 		default:30
 	},
     drinkamountfood:{

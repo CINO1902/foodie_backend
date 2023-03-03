@@ -1542,7 +1542,7 @@ let drink4amount = finddrinkamount4[0].amount
         let payamount = finddata[0].drinkamountfood
      if(drink1 != ''|| drink2 != '' || drink3 != ''){
         await subscription.deleteMany({email:email, subcribed:true, subid:subid})
-        const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, category1, category2, category3, totalamount, drinkamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
+        const insert = new subscription({email, frequency, day1, day2, day3, category1, category2, category3, totalamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
         await insert.save();
        
         await notification.create({
@@ -1563,7 +1563,7 @@ let drink4amount = finddrinkamount4[0].amount
         let drink3 = finddata[0].existingdrink3
         let drinkamount = finddata[0].drinkget
         await subscription.deleteMany({email:email, subcribed:true, subid:subid})
-        const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, drinkamount, category1, category2, category3, totalamount, drinkamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
+        const insert = new subscription({email, frequency, day1, day2, day3, drink1, drink2, drink3, drinkamount, category1, category2, category3, totalamount, finalamount, discounted, subid, subcribed, newplan, rollover, date, expiredate}); 
         await insert.save();
      
         await notification.create({
