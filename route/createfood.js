@@ -20,6 +20,7 @@ const storecalcuate = require("./model/storecalculate");
 const upgradestorage = require("./model/upgradestorage");
 const moment = require("moment");
 const e = require("express");
+const { parse } = require("dotenv");
 
 let dateget = []
 let swallow = ['Amala Pack','Semo Pack']
@@ -2215,11 +2216,17 @@ let drink4amount = finddrinkamount4[0].amount
    } 
     if(getsubdetails.length != 0){
         let date = new Date();
-       let diff = date.getDate() - getsubdetails[0].date.getDate()
+        var start = moment(date);
+var end = moment(getsubdetails[0].date);
+
+//Difference in number of days
+let diff =moment.duration(start.diff(end)).asDays();
+      // let diff = moment(getsubdetails[0].date).fromNow().asDays();
+    //    let diff = date.getDate() - getsubdetails[0].date.getDate()
 
 
 
-        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: diff +1})
+        return res.json({startdate:getsubdetails[0].date, expiredate:getsubdetails[0].expiredate, currentdate:date, newplan:newpland(), frequency:getsubdetails[0].frequency, dayuse: parseInt(diff) + 1})
     }
   })
 
