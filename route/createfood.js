@@ -1357,7 +1357,7 @@ router.route('/sendsubscription').post(async (req,res)=>{
        let rollover = getsubdetails[0].rollover
       let currentdate = new Date();
       var dif= expiredate.getDate()-currentdate.getDate();
-      let d =  dif;
+      let d =  dif +1;
     console.log(d);
 
       let dailyprice = price/30
