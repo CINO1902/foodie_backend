@@ -24,6 +24,9 @@ const resgisterSchema = new mongoose.Schema({
 	referalid:{
 		type:String
 	},
+	loggedstamp:{
+		type:String
+	},
 	location:{
 		type:String
 	},

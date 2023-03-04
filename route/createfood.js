@@ -506,7 +506,7 @@ function getsub(){
 
 await Users.findOne({email:id}).then(async(result)=>{
    
-    return res.status(200).json({success:'true', firstname:result.firstname, lastname:result.lastname, email: result.email, verified: result.verified, referal:result.referalid, address:result.address, phone:result.phone, location:result.location, subscribed:getsub()})
+    return res.status(200).json({success:'true', firstname:result.firstname, lastname:result.lastname, email: result.email, verified: result.verified, referal:result.referalid, address:result.address, phone:result.phone, location:result.location, subscribed:getsub(), ref:result.loggedstamp})
 })
 })
 
@@ -981,10 +981,10 @@ router.route("/login").post(async (req,res)=>{
             }
             return subscribe;
         }
-       
+       let ref = Date.now();
         const accessToken = createTokens(emailuse)
-
-       return res.json({token:accessToken, msg:"Successfully Logged In", success:'true', subscribe: getsub()});
+        await Users.updateOne({email:emailuse},{loggedstamp:ref})
+       return res.json({token:accessToken, msg:"Successfully Logged In", success:'true', subscribe: getsub(), ref:ref});
       }
     }).catch((e)=>{
         return res.json({success:'fail', msg:'Something went wrong'})
