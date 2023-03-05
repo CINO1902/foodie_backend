@@ -766,8 +766,6 @@ router.route('/fetchpackage').get( async (req, res)=>{
   return Math.abs(Math.round(diff));
  }
  console.log(getamountday())
-
- console
          if(date.getDate() != checkdate.getDate()){
             console.log(checkdate)
             console.log(date)
