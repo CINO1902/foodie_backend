@@ -753,7 +753,7 @@ router.route('/fetchpackage').get( async (req, res)=>{
         }
         return total;
     }
-  
+    console.log(getamountday())
       if(getamountday() >= 3000 ){
         let checkcoupon = await notification.find({notification_type:1, id:email});
         if(checkcoupon.length !=0){
@@ -765,9 +765,9 @@ router.route('/fetchpackage').get( async (req, res)=>{
   diff /= (60 * 60);
   return Math.abs(Math.round(diff));
  }
- console.log(getamountday())
+
          if(date.getDate() != checkdate.getDate()){
-            console.log(checkdate)
+            
             console.log(date)
             let code =  await createcoup('1000', 'money',0)
             if(email != ''){
