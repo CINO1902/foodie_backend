@@ -1474,10 +1474,7 @@ let drink4amount = finddrinkamount4[0].amount
         return (getpercent / 100) * pricetopay;
      } 
       let drinkfinal = getdrinkamount(drinks1,30) + getdrinkamount(drinks2, 30) + getdrinkamount(drinks3, 30)
-      console.log(drinkfinal)
-      console.log(getdrinkamount(drinks1,30))
-      console.log(getdrinkamount(drinks2,30))
-      console.log(getdrinkamount(drinks3,30))
+
       let subscidizeddrink = drinkfinal - percentage(20, drinkfinal)
       let drinkprice = drinkget() / 30
       let dailydrinkprice = subscidizeddrink / 30
@@ -1489,8 +1486,7 @@ let drink4amount = finddrinkamount4[0].amount
         let dailypricenew = totalamount/30
         let pricetopay = dailypricenew * d
      let unused_money = dailyprice * d;
-     
-     console.log(getdrinkamount(drinks3,d))
+
     let subfrequency1food = getamount(category1,d) - percentage(30, getamount(category1,d))
     let subfrequency1drink = getdrinkamount(drinks1,d) - percentage(20, getdrinkamount(drinks1,d))
     let frequency1 =  subfrequency1food + subfrequency1drink
@@ -1507,7 +1503,7 @@ let drink4amount = finddrinkamount4[0].amount
     priceseach.push(frequency1, frequency2, frequency3)
     drinkforeach.push(subfrequency1drink, subfrequency2drink,subfrequency3drink)
     foodforeach.push(subfrequency1food, subfrequency2food, subfrequency3food)
- 
+    console.log(unused_money)
     let outstandingfood = unused_money -percentage(30, unused_money)
       let discount = parseInt((totalamount - percentage(30, totalamount)))
      let new_amount_to_pay = pricetopay - unused_money
