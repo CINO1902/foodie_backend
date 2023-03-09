@@ -24,22 +24,22 @@ const { parse } = require("dotenv");
 
 let dateget = []
 let swallow = ['Amala Pack','Semo Pack']
-// let transporter = nodemailer.createTransport({
-//     host: "smtp.gmail.com",
-//     port: 465,
-//     secure: true,
-//     auth: {
-//       user: "caleboruta.co@gmail.com",
-//       pass: "xwqzmrsorrquxhcg",
-//     },
-//   });
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "foodiedelicacies@gmail.com",
+      pass: "yqiyuvqusafftyhb",
+    },
+  });
 
-//   transporter.verify((error, success)=>{
-//     if(error){
-//         console.log(error);
-//     }
-//     console.log(success);
-//   })
+  transporter.verify((error, success)=>{
+    if(error){
+        console.log(error);
+    }
+    console.log(success);
+  })
 
 router.route('/createfood').post(async (req,res)=>{
     const {item, image_url, mincost,extraable, segment, maxspoon} = req.body;
@@ -997,7 +997,7 @@ router.route("/requestOTP").post( async (req,res)=>{
    try{
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailoptions = {
-        from: "caleboruta.co@gmail.com",
+        from: "foodiedelicacies@gmail.com",
         to: email,
         subject: "Verify Your Email",
         html: `<p>Enter <b>${otp}</b> in your app to verify your email and complete your registration</p>`
@@ -1091,7 +1091,7 @@ router.route("/resendOTP").post( async (req,res)=>{
         await otpverifications.deleteMany({email:emailuse});
      const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
      const mailoptions = {
-         from: "caleboruta.co@gmail.com",
+         from: "foodiedelicacies@gmail.com",
          to: emailuse,
          subject: "Verify Your Email",
          html: `<p>Enter <b>${otp}</b> in your app to verify your email and complete your registration</p>`
@@ -2338,7 +2338,7 @@ router.route("/sendrecoverotp").post( async (req,res)=>{
     await recoverotp.deleteMany({email:emailuse});
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailoptions = {
-        from: "caleboruta.co@gmail.com",
+        from: "foodiedelicacies@gmail.com",
         to: email,
         subject: "Recover Your Password",
         html: `<p>Enter <b>${otp}</b> in your app to change your password</p>`
@@ -2386,7 +2386,7 @@ router.route("/resendrecoverOTP").post( async (req,res)=>{
         await recoverotp.deleteMany({email:emailuse});
      const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
      const mailoptions = {
-        from: "caleboruta.co@gmail.com",
+        from: "foodiedelicacies@gmail.com",
         to: email,
         subject: "Recover Your Password",
         html: `<p>Enter <b>${otp}</b> in your app to change your password</p>`
