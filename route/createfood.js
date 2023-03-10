@@ -209,6 +209,7 @@ router.route('/getItemsExtra').post( async (req, res)=>{
             values.push(getextra);
            
          }
+         console.log(value);
          res.json({itemExtra: values})
         
         return values;
