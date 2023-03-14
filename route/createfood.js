@@ -999,7 +999,7 @@ router.route("/requestOTP").post( async (req,res)=>{
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailoptions = {
         from: "foodiedelicacies@gmail.com",
-        to: email,
+        to: emailuse,
         subject: "Verify Your Email",
         html: `<p>Enter <b>${otp}</b> in your app to verify your email and complete your registration</p>`
     };
@@ -1017,12 +1017,11 @@ router.route("/requestOTP").post( async (req,res)=>{
     res.json({
         success:'true',
         msg:'Otp sent successfully',
-
     })
    }catch(error){
     res.json({
         success:'false',
-        msg:'Something Went Wrong',
+        msg:error,
 
     })
    }
@@ -2541,6 +2540,26 @@ try{
 } 
 })
 
+router.route("/deleteaccount").post( async (req,res)=>{
+    const {email} =req.body
+try{
+   let getdata = await subscription.find({email:email, subcribed:true})
+   if(getdata[0].length != 0){
+    return res.json({success:'fail', msg:"You can't delete your account while you have a subscription"})
+   }
+  else{
+    let getuser = await Users.find({email:email})
+    if(getuser[0].length != 0){
+        await Users.deleteMany({email:email})
+        return res.json({success:'success', msg:'Account Deleted succesfully'})
+    }else{
+        return res.json({success:'fail', msg:"You don't have an account with us"})
+    }
+   }
+}catch(e){
+    return res.json({success:'fail', msg:'Something went wrong'})
+} 
+})
 // async function monitorListingsUsingEventEmitter(timeInMs = 60000, pipeline = []) {
 //  //   const collection = client.db("sample_airbnb"). collection ("listingsAndReviews");
 //     const changeStream = updatepayment.watch(pipeline);
