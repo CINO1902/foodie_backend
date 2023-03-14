@@ -2557,6 +2557,7 @@ try{
     }
    }
 }catch(e){
+    console.log(e);
     return res.json({success:'fail', msg:'Something went wrong'})
 } 
 })
