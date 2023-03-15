@@ -24,13 +24,21 @@ const { parse } = require("dotenv");
 
 let dateget = []
 let swallow = ['Amala Pack','Semo Pack']
+let itemsslide = [
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1670513661/foodie/CHI-heralds-festive-season_pum9at.png',
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1670510774/foodie/SmartSelect_20181125-233844_Instagram_rntql1.jpg',
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1670509149/foodie/1028-Avila-Rice-004watermarked-scaled-1-scaled_p55ays.jpg',
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1668780604/foodie/jellof-rice_bmpdvh.webp',
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1668780600/foodie/EgusiSoup_mo9yii.jpg',
+    'https://res.cloudinary.com/dlsavisdq/image/upload/v1668780314/cld-sample-2.jpg'
+  ];
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
       user: "foodiedelicacies@gmail.com",
-      pass: "yqiyuvqusafftyhb",
+      pass: "csdpgiydsnurauwa",
     },
   });
 
@@ -2473,7 +2481,14 @@ msg:error,
 })
 }
 })
-
+router.route("/getimageslider").get( async (req,res)=>{
+    
+try{
+   return res.json({success:'success', item:itemsslide})
+}catch(e){
+    return res.json({success:'fail', item:''})
+} 
+})
 
 router.route("/insertingref").post( async (req,res)=>{
     
